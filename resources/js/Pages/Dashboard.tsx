@@ -1,5 +1,6 @@
+import { Head, Link } from "@inertiajs/react";
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 
 export default function Dashboard({ auth }: PageProps) {
@@ -20,12 +21,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-                        <button className="btn btn-primary">Primary</button>
-                        <button className="btn btn-active btn-neutral">
-                            Neutral
-                        </button>
-                        <button className="btn btn-outline">Default</button>
-                        <button className="btn glass">Glass button</button>
+                        <Link href="/upload-survey" className="btn btn-primary">
+                            Upload A Survey
+                        </Link>
                     </div>
                 </div>
             </div>
