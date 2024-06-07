@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('local_housing_contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained('users');
             $table->string('congregation');
             $table->timestamps();
         });

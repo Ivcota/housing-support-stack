@@ -19,4 +19,9 @@ class LocalHousingContact extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    function survey()
+    {
+        return $this->hasMany(Survey::class);
+    }
 }
