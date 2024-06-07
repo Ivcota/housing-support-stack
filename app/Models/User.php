@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function localHousingContact()
+    {
+        return $this->hasOne(LocalHousingContact::class);
+    }
 }
