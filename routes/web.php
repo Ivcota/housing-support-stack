@@ -35,12 +35,12 @@ Route::get('/survey/{id}', function ($id) {
     return Inertia::render('Survey/Show', [
         'survey' => $survey,
     ]);
-});
+})->middleware(['auth', 'verified'])->name('survey.show');
 
 
 Route::get('/upload-survey', function () {
     return Inertia::render('Survey/Upload');
-});
+})->middleware(['auth'])->name('survey.upload');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
