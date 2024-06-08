@@ -1,8 +1,8 @@
 import { Head, Link } from "@inertiajs/react";
-import toast, { useToaster } from "react-hot-toast";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
+import toast from "react-hot-toast";
 import { useEffect } from "react";
 
 export interface SurveyPaginated {
@@ -26,7 +26,7 @@ export interface Survey {
     local_housing_contact_id: number;
     address: string;
     file_location: string;
-    status: string;
+    status: SurveyStatus;
     created_at: Date;
     updated_at: Date;
 }
@@ -36,6 +36,13 @@ export interface Link {
     label: string;
     active: boolean;
 }
+
+export type SurveyStatus =
+    | "needs_uploader_action"
+    | "pre_review"
+    | "in_review"
+    | "approved"
+    | "rejected";
 
 export default function Dashboard({
     auth,
@@ -79,11 +86,11 @@ export default function Dashboard({
                                 </Link>
                             </div>
 
-                            <section className="flex gap-4 flex-wrap">
+                            <section className="flex gap-4 pt-10 flex-wrap">
                                 {surveys.data.map((survey) => (
                                     <div
                                         key={survey.id}
-                                        className="card w-60 bg-base-100 shadow-xl"
+                                        className="card w-60 bg-base-100 mx-auto shadow-xl"
                                     >
                                         <div className="card-body">
                                             <h2 className="card-title">
