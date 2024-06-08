@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,8 +16,27 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $surveys = Auth::user()->localHousingContact->survey()->paginate(10);
+    return Inertia::render('Dashboard', [
+        'surveys' => $surveys,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/survey/{id}', function ($id) {
+    $survey = Auth::user()->localHousingContact->survey()->find($id);
+
+
+    if (!$survey) {
+        return redirect()->route('dashboard', [
+            'message' => 'Survey not found',
+        ]);
+    }
+
+    return Inertia::render('Survey/Show', [
+        'survey' => $survey,
+    ]);
+});
+
 
 Route::get('/upload-survey', function () {
     return Inertia::render('Survey/Upload');
