@@ -10,6 +10,7 @@ class Survey extends Model
     use HasFactory;
 
     protected $fillable = [
+        'local_housing_contact_id',
         'address',
         'file_location',
         'status'
