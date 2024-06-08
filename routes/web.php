@@ -19,7 +19,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/upload-survey', function () {
-    return Inertia::render('UploadSurvey');
+    return Inertia::render('Survey/Upload');
 });
 
 Route::middleware('auth')->group(function () {
