@@ -7,7 +7,7 @@ const UploadSurvey = ({ auth }: PageProps) => {
         <AuthenticatedLayout user={auth.user}>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="prose bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 px-5">
+                    <div className="prose bg-white mx-auto overflow-hidden shadow-sm sm:rounded-lg py-6 px-5">
                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                             Upload A Survey
                         </h2>
@@ -33,6 +33,12 @@ const UploadSurvey = ({ auth }: PageProps) => {
                                     className="file-input w-full max-w-xs"
                                 />
                             </div>
+                            <button
+                                type="submit"
+                                className="btn mt-4 btn-primary"
+                            >
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>
