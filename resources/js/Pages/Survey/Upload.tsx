@@ -1,8 +1,24 @@
+import { Link, useForm } from "@inertiajs/react";
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Link } from "@inertiajs/react";
+import { FormEventHandler } from "react";
+import InputError from "@/Components/InputError";
 import { PageProps } from "@/types";
 
 const UploadSurvey = ({ auth }: PageProps) => {
+    const { post, setData, errors } = useForm<{
+        survey?: File;
+        address: string;
+    }>({
+        address: "",
+        survey: undefined,
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route("survey.upload.survey"));
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="py-12">
@@ -24,14 +40,29 @@ const UploadSurvey = ({ auth }: PageProps) => {
                             </Link>
                         </p>
 
-                        <form method="post">
+                        <form onSubmit={submit} encType="multipart/form-data">
                             <div className="flex flex-col gap-3 pt-9">
-                                <label htmlFor="survey"> Survey</label>
+                                <label htmlFor="address">Address</label>
+                                <input
+                                    name="survey"
+                                    type="text"
+                                    className="input input-primary w-full max-w-xs"
+                                    onChange={(e) =>
+                                        setData("address", e.target.value)
+                                    }
+                                />
+
+                                <InputError message={errors.address} />
+                                <label htmlFor="survey">Survey</label>
                                 <input
                                     name="survey"
                                     type="file"
                                     className="file-input w-full max-w-xs"
+                                    onChange={(e) =>
+                                        setData("survey", e.target.files?.[0])
+                                    }
                                 />
+                                <InputError message={errors.survey} />
                             </div>
                             <button
                                 type="submit"

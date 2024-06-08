@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SurveyUploadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -61,9 +62,16 @@ Route::get('/survey/{id}', function ($id) {
 })->middleware(['auth', 'verified'])->name('survey.show');
 
 
-Route::get('/upload-survey', function () {
-    return Inertia::render('Survey/Upload');
-})->middleware(['auth'])->name('survey.upload');
+Route::get(
+    '/upload-survey',
+    [SurveyUploadController::class, 'view']
+)->middleware(['auth'])->name('survey.upload');
+
+Route::post(
+    '/upload-survey',
+    [SurveyUploadController::class, 'upload']
+)->middleware(['auth'])->name('survey.upload.survey');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
