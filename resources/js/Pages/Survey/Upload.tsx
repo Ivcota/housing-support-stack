@@ -24,6 +24,9 @@ const UploadSurvey = ({ auth }: PageProps) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="prose bg-white mx-auto overflow-hidden shadow-sm sm:rounded-lg py-6 px-5">
+                        <Link href="/dashboard" className="link link-primary">
+                            Back to Dashboard
+                        </Link>
                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                             Upload A Survey
                         </h2>

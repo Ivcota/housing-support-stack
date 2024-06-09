@@ -26,6 +26,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@tanstack/react-table": "^8.17.3",
         "react-hot-toast": "^2.4.1"
     }
 }

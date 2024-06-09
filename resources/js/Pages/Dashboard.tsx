@@ -2,60 +2,29 @@ import { Head, Link } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
+import { SurveyList } from "@/Components/Surveys";
+import { SurveyPaginated } from "@/fooTypes";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
-export interface SurveyPaginated {
-    current_page: number;
-    data: Survey[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: Link[];
-    next_page_url: null;
-    path: string;
-    per_page: number;
-    prev_page_url: null;
-    to: number;
-    total: number;
-}
+const useDashboard = () => {
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get("message");
+    useEffect(() => {
+        if (message) toast.error(message);
+    }, [message]);
 
-export interface Survey {
-    id: number;
-    local_housing_contact_id: number;
-    address: string;
-    file_location: string;
-    status: SurveyStatus;
-    created_at: Date;
-    updated_at: Date;
-}
-
-export interface Link {
-    url: null | string;
-    label: string;
-    active: boolean;
-}
-
-export type SurveyStatus =
-    | "needs_uploader_action"
-    | "pre_review"
-    | "in_review"
-    | "approved"
-    | "rejected";
+    return {
+        message,
+        params,
+    };
+};
 
 export default function Dashboard({
     auth,
     surveys,
 }: PageProps<{ surveys: SurveyPaginated }>) {
-    const params = new URLSearchParams(window.location.search);
-    const message = params.get("message");
-
-    useEffect(() => {
-        if (message) {
-            toast.error(message);
-        }
-    }, [message]);
+    useDashboard();
 
     return (
         <AuthenticatedLayout
@@ -86,29 +55,7 @@ export default function Dashboard({
                                 </Link>
                             </div>
 
-                            <section className="flex gap-4 pt-10 flex-wrap">
-                                {surveys.data.map((survey) => (
-                                    <div
-                                        key={survey.id}
-                                        className="card w-60 bg-base-100 mx-auto shadow-xl"
-                                    >
-                                        <div className="card-body">
-                                            <h2 className="card-title">
-                                                {survey.address}
-                                            </h2>
-                                            <p>{survey.status}</p>
-                                            <div className="card-actions justify-start">
-                                                <Link
-                                                    href={`/survey/${survey.id}`}
-                                                    className="btn btn-primary"
-                                                >
-                                                    View Details
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </section>
+                            <SurveyList surveys={surveys} />
                         </div>
                     </div>
                 </div>

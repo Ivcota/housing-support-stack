@@ -21,4 +21,9 @@ class Survey extends Model
     {
         return $this->belongsTo(LocalHousingContact::class);
     }
+
+    function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\LocalHousingContact;
 use App\Models\Survey;
 use App\Models\User;
@@ -23,7 +24,11 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->has(
             LocalHousingContact::factory()->has(
-                Survey::factory(9)
+                Survey::factory(9)->has(
+                    Comment::factory(3)->state([
+                        'user_id' => 1,
+                    ])
+                )
             )
         )->create([
             'name' => 'Test User',
