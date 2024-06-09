@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
         '/upload-survey',
         [SurveyUploadController::class, 'upload']
     )->name('survey.upload.survey');
+    Route::get('/survey-download/{fileName}', [SurveyUploadController::class, 'download'])->name('survey.download');
 });
 
 Route::middleware('auth')->group(function () {

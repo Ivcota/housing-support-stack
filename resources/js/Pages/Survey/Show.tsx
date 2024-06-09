@@ -5,9 +5,15 @@ import { Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 
 const Show = (
-    props: PageProps<{ survey: Survey; message?: string; comments?: Comment[] }>
+    props: PageProps<{
+        survey: Survey;
+        message?: string;
+        comments?: Comment[];
+        file?: string;
+    }>
 ) => {
-    const { survey, comments } = props;
+    const { survey, comments, file } = props;
+    console.log(file);
     return (
         <Authenticated user={props.auth.user}>
             <div className="py-12">
@@ -22,12 +28,12 @@ const Show = (
                         <p>
                             <b>Address:</b> {survey.address}
                         </p>
-                        <Link
-                            href={survey.file_location}
+                        <a
+                            href={`/survey-download/${file}`}
                             className="btn btn-primary"
                         >
                             Download Survey
-                        </Link>
+                        </a>
 
                         <div>
                             {comments &&

@@ -6,12 +6,18 @@ use App\Models\Comment;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 
 
 class SurveyUploadController extends Controller
 {
+
+    public function download($fileName)
+    {
+        return response()->download(storage_path('app/public/surveys/' . $fileName));
+    }
 
     public function view()
     {
@@ -21,6 +27,7 @@ class SurveyUploadController extends Controller
     public function show($id)
     {
         $survey = Auth::user()->localHousingContact->survey()->find($id);
+
 
         if (!$survey) {
             return redirect()->route('dashboard', [
@@ -32,9 +39,9 @@ class SurveyUploadController extends Controller
 
         $comments = Comment::where('survey_id', $id)->orderBy('id', 'desc')->get();
 
-
         return Inertia::render('Survey/Show', [
             'survey' => $survey,
+            'file' => $survey->file_location,
             'message' => $message,
             'comments' => $comments->map(function ($comment) {
                 return [
@@ -60,14 +67,17 @@ class SurveyUploadController extends Controller
         ]);
 
         $path = $request->file('survey')->store('surveys');
+        $fileName = basename($path);
 
         $survey = new Survey();
+
 
         $survey->fill([
             'local_housing_contact_id' => Auth::user()->localHousingContact->id,
             'address' => $request->address,
-            'file_location' => $path,
+            'file_location' => $fileName,
         ])->save();
+
 
 
         return redirect()->route('survey.show', [

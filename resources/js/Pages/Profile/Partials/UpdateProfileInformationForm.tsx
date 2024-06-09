@@ -24,6 +24,7 @@ export default function UpdateProfileInformation({
             name: user.name,
             email: user.email,
             phone: user.phone,
+            congregation: user.localHousingContact?.congregation,
         });
 
     const submit: FormEventHandler = (e) => {
@@ -111,6 +112,31 @@ export default function UpdateProfileInformation({
                         required
                         isFocused
                         autoComplete="phone"
+                    />
+
+                    <InputError
+                        className="mt-2"
+                        message={
+                            errors.phone === "validation.phone"
+                                ? "Please enter a valid phone number."
+                                : errors.phone
+                        }
+                    />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="congregation" value="Congregation" />
+
+                    <TextInput
+                        id="name"
+                        className="mt-1 block w-full"
+                        value={data?.congregation}
+                        onChange={(e) =>
+                            setData("congregation", e.target.value)
+                        }
+                        required
+                        isFocused
+                        autoComplete="congregation"
                     />
 
                     <InputError

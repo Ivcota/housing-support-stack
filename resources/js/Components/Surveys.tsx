@@ -72,27 +72,23 @@ export const SurveyList = ({ surveys }: { surveys: SurveyPaginated }) => {
                     ))}
                 </tbody>
             </table>
+            <div className="join">
+                <Link
+                    href={surveys.prev_page_url ?? ""}
+                    className="join-item btn"
+                >
+                    «
+                </Link>
+                <button className="join-item btn">
+                    Page {surveys.current_page}
+                </button>
+                <Link
+                    href={surveys.next_page_url ?? ""}
+                    className="join-item btn"
+                >
+                    »
+                </Link>
+            </div>
         </section>
     );
 };
-// <section className="flex gap-4 pt-10 flex-wrap">
-//     {surveys.data.map((survey) => (
-//         <div
-//             key={survey.id}
-//             className="card w-60 bg-base-100 mx-auto shadow-xl"
-//         >
-//             <div className="card-body">
-//                 <h2 className="card-title">{survey.address}</h2>
-//                 <p>{survey.status}</p>
-//                 <div className="card-actions justify-start">
-//                     <Link
-//                         href={`/survey/${survey.id}`}
-//                         className="link link-primary"
-//                     >
-//                         View Details
-//                     </Link>
-//                 </div>
-//             </div>
-//         </div>
-//     ))}
-// </section>
