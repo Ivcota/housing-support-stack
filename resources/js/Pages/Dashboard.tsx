@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { SurveyList } from "@/Components/Surveys";
-import { SurveyPaginated } from "@/fooTypes";
+import { SurveyPaginated } from "@/types/application";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 

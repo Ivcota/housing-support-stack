@@ -1,4 +1,4 @@
-import { Survey, SurveyPaginated } from "@/fooTypes";
+import { Survey, SurveyPaginated } from "@/types/application";
 import {
     createColumnHelper,
     flexRender,

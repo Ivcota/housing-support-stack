@@ -1,4 +1,4 @@
-import { Comment, Survey } from "@/fooTypes";
+import { Comment, Survey } from "@/types/application";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/react";
