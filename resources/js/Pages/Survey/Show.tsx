@@ -4,7 +4,28 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 
+const useTimeAgo = () => {
+    const timeAgo = (date: Date) => {
+        const diff = new Date().getTime() - date.getTime();
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (hours > 0) {
+            return `${hours} hours ago`;
+        }
+
+        if (minutes > 0) {
+            return `${minutes} minutes ago`;
+        }
+
+        return `${Math.floor(diff / 1000)} seconds ago`;
+    };
+
+    return { timeAgo };
+};
+
 function Comments({ comments }: { comments?: Comment[] }) {
+    const { timeAgo } = useTimeAgo();
     return (
         <div className="rounded-md gap-12 flex flex-col">
             {comments &&
@@ -13,13 +34,11 @@ function Comments({ comments }: { comments?: Comment[] }) {
                         className="shadow-lg py-5 px-4 rounded-md"
                         key={comment.id}
                     >
-                        <p>{comment.comment}</p>
-                        <div className="text-gray-500 font-bold text-sm flex flex-col ">
-                            <div>by {comment.user.name}</div>
-                            <div>
-                                {new Date(comment.created_at).toLocaleString()}
-                            </div>
+                        <div className="text-gray-500 font-bold text-sm flex gap-2">
+                            <div>{comment.user.name}</div>
+                            <div>{timeAgo(new Date(comment.created_at))}</div>
                         </div>
+                        <p>{comment.comment}</p>
                     </div>
                 ))}
         </div>
