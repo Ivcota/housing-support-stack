@@ -37,27 +37,19 @@ export default function Dashboard({
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="px-5 py-4">
-                            <div className="prose">
-                                <h2>Dashboard</h2>
-                                <p>
-                                    Welcome to your dashboard. All your surveys
-                                    are listed here.
-                                </p>
-                                <Link
-                                    href="/upload-survey"
-                                    className="btn btn-primary"
-                                >
-                                    Upload A Survey
-                                </Link>
-                            </div>
-
-                            <SurveyList surveys={surveys} />
-                        </div>
+            <div className="px-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="px-5 py-4">
+                    <div className="prose">
+                        <p>
+                            Welcome to your dashboard. All your surveys are
+                            listed here.
+                        </p>
+                        <Link href="/upload-survey" className="btn btn-primary">
+                            Upload A Survey
+                        </Link>
                     </div>
+
+                    <SurveyList surveys={surveys} />
                 </div>
             </div>
         </AuthenticatedLayout>

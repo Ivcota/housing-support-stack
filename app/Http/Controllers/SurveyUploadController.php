@@ -6,7 +6,6 @@ use App\Models\Comment;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 
@@ -16,7 +15,7 @@ class SurveyUploadController extends Controller
 
     public function download($fileName)
     {
-        return response()->download(storage_path('app/public/surveys/' . $fileName));
+        return response()->download(storage_path('app/surveys/' . $fileName));
     }
 
     public function view()
