@@ -6,10 +6,6 @@ export interface User {
     email: string;
     email_verified_at: string;
     phone?: string;
-    localHousingContact?: {
-        id: number;
-        congregation: string;
-    };
 }
 
 export type PageProps<

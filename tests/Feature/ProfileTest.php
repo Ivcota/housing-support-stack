@@ -40,7 +40,9 @@ test('profile information can be updated', function () {
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->has(
+        LocalHousingContact::factory()
+    )->create();
 
     $response = $this
         ->actingAs($user)
@@ -50,8 +52,8 @@ test('email verification status is unchanged when the email address is unchanged
         ]);
 
     $response
-        ->assertSessionHasNoErrors();
-    // ->assertRedirect('/profile');
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/profile');
 
     $this->assertNotNull($user->refresh()->email_verified_at);
 });

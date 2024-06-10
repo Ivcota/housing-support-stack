@@ -18,13 +18,20 @@ export default function UpdateProfileInformation({
     className?: string;
 }) {
     const user = usePage<PageProps>().props.auth.user;
+    const localHousingContact = usePage<
+        PageProps<{
+            localHousingContact?: {
+                congregation?: string;
+            };
+        }>
+    >().props.localHousingContact;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             name: user.name,
             email: user.email,
             phone: user.phone,
-            congregation: user.localHousingContact?.congregation,
+            congregation: localHousingContact?.congregation,
         });
 
     const submit: FormEventHandler = (e) => {
@@ -109,7 +116,6 @@ export default function UpdateProfileInformation({
                         className="mt-1 block w-full"
                         value={data?.phone}
                         onChange={(e) => setData("phone", e.target.value)}
-                        required
                         isFocused
                         autoComplete="phone"
                     />
@@ -134,18 +140,13 @@ export default function UpdateProfileInformation({
                         onChange={(e) =>
                             setData("congregation", e.target.value)
                         }
-                        required
                         isFocused
                         autoComplete="congregation"
                     />
 
                     <InputError
                         className="mt-2"
-                        message={
-                            errors.phone === "validation.phone"
-                                ? "Please enter a valid phone number."
-                                : errors.phone
-                        }
+                        message={errors.congregation}
                     />
                 </div>
 
