@@ -2,10 +2,41 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyUploadController;
+use App\Models\LocalHousingContact;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    $user = User::where('email', $googleUser->email)->first();
+
+    if (!$user) {
+        $user = User::create([
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'password' => bcrypt($googleUser->id),
+        ]);
+
+        LocalHousingContact::create([
+            'user_id' => $user->id,
+            'congregation' => 'Please select a congregation',
+        ]);
+    }
+
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
