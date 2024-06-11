@@ -3,6 +3,7 @@ import "../css/app.css";
 
 import { createRoot, hydrateRoot } from "react-dom/client";
 
+import { PrimeReactProvider } from "primereact/api";
 import { Toaster } from "react-hot-toast";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
@@ -20,8 +21,10 @@ createInertiaApp({
         if (import.meta.env.DEV) {
             createRoot(el).render(
                 <>
-                    <App {...props} />
-                    <Toaster />
+                    <PrimeReactProvider>
+                        <App {...props} />
+                        <Toaster />
+                    </PrimeReactProvider>
                 </>
             );
             return;
@@ -30,8 +33,10 @@ createInertiaApp({
         hydrateRoot(
             el,
             <>
-                <App {...props} />
-                <Toaster />
+                <PrimeReactProvider value={{ unstyled: true, pt: {} }}>
+                    <App {...props} />
+                    <Toaster />
+                </PrimeReactProvider>
             </>
         );
     },

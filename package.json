@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@tanstack/react-table": "^8.17.3",
+        "primereact": "^10.6.6",
         "react-hot-toast": "^2.4.1"
     }
 }
