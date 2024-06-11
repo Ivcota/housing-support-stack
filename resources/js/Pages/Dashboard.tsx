@@ -1,6 +1,7 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Button } from "primereact/button";
 import { PageProps } from "@/types";
 import { SurveyList } from "@/Components/Surveys";
 import { SurveyPaginated } from "@/types/application";
@@ -44,9 +45,12 @@ export default function Dashboard({
                             Welcome to your dashboard. All your surveys are
                             listed here.
                         </p>
-                        <Link href="/upload-survey" className="btn btn-primary">
-                            Upload A Survey
-                        </Link>
+                        <Button
+                            size="small"
+                            onClick={() => router.get("/upload-survey")}
+                        >
+                            Upload a Survey
+                        </Button>
                     </div>
 
                     <SurveyList surveys={surveys} />

@@ -1,12 +1,16 @@
-import { Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Button } from "primereact/button";
+import { FileUpload } from "primereact/fileupload";
+import { FloatLabel } from "primereact/floatlabel";
 import { FormEventHandler } from "react";
 import InputError from "@/Components/InputError";
+import { InputText } from "primereact/inputtext";
 import { PageProps } from "@/types";
 
 const UploadSurvey = ({ auth }: PageProps) => {
-    const { post, setData, errors } = useForm<{
+    const { post, setData, errors, data } = useForm<{
         survey?: File;
         address: string;
     }>({
@@ -28,6 +32,8 @@ const UploadSurvey = ({ auth }: PageProps) => {
                 </h2>
             }
         >
+            <Head title="Upload a Survey" />
+
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="prose bg-white mx-auto overflow-hidden shadow-sm sm:rounded-lg py-6 px-5">
                     <Link href="/dashboard" className="link link-primary">
@@ -48,32 +54,41 @@ const UploadSurvey = ({ auth }: PageProps) => {
                     </p>
 
                     <form onSubmit={submit} encType="multipart/form-data">
-                        <div className="flex flex-col gap-3 pt-9">
-                            <label htmlFor="address">Address</label>
-                            <input
-                                name="survey"
-                                type="text"
-                                className="input input-primary w-full max-w-xs"
-                                onChange={(e) =>
-                                    setData("address", e.target.value)
-                                }
-                            />
+                        <div className="flex flex-col gap-3 pt-3">
+                            <FloatLabel>
+                                <InputText
+                                    id="address"
+                                    name="address"
+                                    onChange={(e) =>
+                                        setData("address", e.target.value)
+                                    }
+                                    value={data.address}
+                                />
+                                <label htmlFor="Address">Address</label>
+                            </FloatLabel>
 
                             <InputError message={errors.address} />
-                            <label htmlFor="survey">Survey</label>
-                            <input
-                                name="survey"
-                                type="file"
-                                className="file-input w-full max-w-xs"
-                                onChange={(e) =>
-                                    setData("survey", e.target.files?.[0])
-                                }
-                            />
-                            <InputError message={errors.survey} />
+
+                            <div className="card">
+                                <FileUpload
+                                    mode="basic"
+                                    name="survey"
+                                    maxFileSize={1000000}
+                                    onSelect={(e) => {
+                                        setData("survey", e.files[0]);
+                                    }}
+                                />
+                                <InputError message={errors.survey} />
+                            </div>
                         </div>
-                        <button type="submit" className="btn mt-4 btn-primary">
+
+                        <Button
+                            size="small"
+                            className="p-button mt-4"
+                            type="submit"
+                        >
                             Submit
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </div>
