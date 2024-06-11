@@ -48,7 +48,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $surveys = Auth::user()->localHousingContact->survey()->paginate(10);
+    $surveys = Auth::user()->localHousingContact->survey()->paginate(500);
     return Inertia::render('Dashboard', [
         'surveys' => $surveys,
     ]);
