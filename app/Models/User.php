@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(LocalHousingContact::class);
     }
+
+    public function projectHousingContact()
+    {
+        return $this->hasOne(ProjectHousingContact::class);
+    }
 }

@@ -5,28 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LocalHousingContact extends Model
+class ProjectHousingContact extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'congregation',
     ];
 
 
-    function user()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    function survey()
+    public function localHousingContact()
     {
-        return $this->hasMany(Survey::class);
-    }
-
-    function projectHousingContact()
-    {
-        return $this->belongsTo(ProjectHousingContact::class);
+        return $this->hasMany(LocalHousingContact::class);
     }
 }
