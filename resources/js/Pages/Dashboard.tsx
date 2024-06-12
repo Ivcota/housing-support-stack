@@ -24,9 +24,9 @@ const useDashboard = () => {
 export default function Dashboard({
     auth,
     surveys,
+    ziggy,
 }: PageProps<{ surveys: SurveyPaginated }>) {
     useDashboard();
-
     return (
         <AuthenticatedLayout
             user={auth.user}

@@ -18,7 +18,10 @@ class Admin
     {
 
         if (Auth::check()) {
-            return redirect('dashboard');
+            $user = Auth::user();
+            if ($user->role !== 'admin') {
+                return redirect('dashboard');
+            }
         }
 
         return $next($request);
