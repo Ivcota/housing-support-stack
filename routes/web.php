@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyUploadController;
 use App\Models\LocalHousingContact;
@@ -55,10 +56,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+});
+
+Route::middleware('auth')->group(function () {
     Route::get(
         '/survey/{id}',
         [SurveyUploadController::class, 'show']
     )->name('survey.show');
+    Route::delete('/survey/{id}', [SurveyUploadController::class, 'delete'])->name('survey.delete');
     Route::get(
         '/upload-survey',
         [SurveyUploadController::class, 'view']

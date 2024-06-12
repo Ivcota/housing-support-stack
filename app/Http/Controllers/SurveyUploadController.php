@@ -109,4 +109,11 @@ class SurveyUploadController extends Controller
 
         return $message;
     }
+
+    public function delete($id)
+    {
+        $survey = Auth::user()->localHousingContact->survey()->find($id);
+        $survey->delete();
+        return redirect()->route('dashboard');
+    }
 }
