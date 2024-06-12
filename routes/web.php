@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyUploadController;
+use App\Http\Middleware\Admin;
 use App\Models\LocalHousingContact;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -14,30 +17,7 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
-
-Route::get('/auth/callback', function () {
-    $googleUser = Socialite::driver('google')->user();
-
-    $user = User::where('email', $googleUser->email)->first();
-
-    if (!$user) {
-        $user = User::create([
-            'name' => $googleUser->name,
-            'email' => $googleUser->email,
-            'password' => bcrypt($googleUser->id),
-        ]);
-
-        LocalHousingContact::create([
-            'user_id' => $user->id,
-            'congregation' => 'Please select a congregation',
-        ]);
-    }
-
-
-    Auth::login($user);
-
-    return redirect('/dashboard');
-});
+Route::get('/auth/callback', [AuthenticatedSessionController::class, 'googleStore'])->name('auth.google');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -80,6 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+Route::middleware(['auth', Admin::class])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__ . '/auth.php';

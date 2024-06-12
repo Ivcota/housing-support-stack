@@ -1,7 +1,10 @@
 import { Comment, Survey } from "@/types/application";
+import { Link, useForm } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link } from "@inertiajs/react";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { PageProps } from "@/types";
 
 const useTimeAgo = () => {
@@ -18,7 +21,7 @@ const useTimeAgo = () => {
             return `${minutes} minutes ago`;
         }
 
-        return `${Math.floor(diff / 1000)} seconds ago`;
+        return `Just now`;
     };
 
     return { timeAgo };
@@ -54,6 +57,11 @@ const Show = (
     }>
 ) => {
     const { survey, comments, file } = props;
+    const { setData, post, errors, data } = useForm({
+        comment: "",
+        survey_id: survey.id,
+    });
+
     return (
         <Authenticated
             user={props.auth.user}
@@ -68,7 +76,7 @@ const Show = (
                 </div>
             }
         >
-            <div className="px-6  bg-white py-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div className="px-6 mt-3 bg-white py-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="prose">
                     <h3>
                         #{survey.id}: {props.message}
@@ -84,7 +92,35 @@ const Show = (
                     </a>
 
                     <div className="pt-12">
-                        <Comments comments={comments} />
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                post("/comment", {
+                                    preserveScroll: true,
+                                    onFinish: () => {
+                                        setData("comment", "");
+                                    },
+                                });
+                            }}
+                        >
+                            <div className="flex flex-col gap-2">
+                                <InputText
+                                    onChange={(e) =>
+                                        setData("comment", e.target.value)
+                                    }
+                                    value={data.comment}
+                                />
+                                {errors.comment && (
+                                    <p className="text-red-500">
+                                        {errors.comment}
+                                    </p>
+                                )}
+                                <Button label="Send" />
+                            </div>
+                        </form>
+                        <div className="pt-4">
+                            <Comments comments={comments} />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -34,7 +34,7 @@ const UploadSurvey = ({ auth }: PageProps) => {
         >
             <Head title="Upload a Survey" />
 
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
                 <div className="prose bg-white mx-auto overflow-hidden shadow-sm sm:rounded-lg py-6 px-5">
                     <Link href="/dashboard" className="link link-primary">
                         Back to Dashboard
@@ -73,6 +73,7 @@ const UploadSurvey = ({ auth }: PageProps) => {
                                 <FileUpload
                                     mode="basic"
                                     name="survey"
+                                    chooseLabel="Upload a survey document"
                                     maxFileSize={1000000}
                                     onSelect={(e) => {
                                         setData("survey", e.files[0]);

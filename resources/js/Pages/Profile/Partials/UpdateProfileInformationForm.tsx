@@ -1,5 +1,6 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 
+import { Button } from "primereact/button";
 import { FormEventHandler } from "react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -151,7 +152,9 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <Button size="small" disabled={processing}>
+                        Save
+                    </Button>
 
                     <Transition
                         show={recentlySuccessful}
