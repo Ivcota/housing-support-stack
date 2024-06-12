@@ -34,5 +34,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        User::factory()->has(
+            LocalHousingContact::factory()->has(
+                Survey::factory(9)->has(
+                    Comment::factory(3)->state([
+                        'user_id' => 4,
+                    ])
+                )
+            )
+        )->create([
+            'name' => 'Iverson Diles',
+            'email' => 'ivcotad@gmail.com',
+            'role' => 'phc',
+        ]);
     }
 }
