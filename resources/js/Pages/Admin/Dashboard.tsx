@@ -1,16 +1,23 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
-import React from "react";
 
-const Dashboard = ({ auth }: PageProps) => {
+export interface Lhc {
+    id: number;
+    user_id: number;
+    congregation: string;
+    created_at: Date;
+    updated_at: Date;
+    project_housing_contact_id: number;
+}
+
+const Dashboard = ({ auth, lhcs }: PageProps<{ lhcs: Lhc[] }>) => {
     return (
         <Authenticated user={auth.user}>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-                ipsam amet obcaecati dolorum placeat beatae dolor. Reiciendis
-                quisquam quibusdam dolor provident illo modi veritatis error
-                animi placeat, ipsam eligendi minus.
-            </p>
+            {lhcs.map((lhc) => (
+                <div key={lhc.id}>
+                    <p>{lhc.congregation}</p>
+                </div>
+            ))}
         </Authenticated>
     );
 };
