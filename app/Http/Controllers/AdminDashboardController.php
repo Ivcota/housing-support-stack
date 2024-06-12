@@ -9,6 +9,11 @@ class AdminDashboardController extends Controller
 {
     public function index(Request $request)
     {
-        return Inertia::render('Admin/Dashboard');
+
+        $lhcs = $request->user()->projectHousingContact->localHousingContact;
+
+        return Inertia::render('Admin/Dashboard', [
+            'lhcs' => $lhcs,
+        ]);
     }
 }

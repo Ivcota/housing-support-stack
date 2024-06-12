@@ -37,6 +37,22 @@ class DatabaseSeeder extends Seeder
             )
         )->create();
 
+        User::factory()->has(
+            LocalHousingContact::factory()->state([
+                'project_housing_contact_id' => $phc->id,
+            ])->has(
+                Survey::factory(5)->has(
+                    Comment::factory(3)->state([
+                        'user_id' => rand(1, 3),
+                    ])
+                )
+            )
+        )->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
         LocalHousingContact::factory()->create([
             'user_id' => $phc->id,
             'project_housing_contact_id' => $phc->projectHousingContact->id,
