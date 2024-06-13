@@ -76,8 +76,8 @@ const Show = (
                 </div>
             }
         >
-            <div className="px-6 mt-3 bg-white py-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div className="prose">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white mt-6 py-6 rounded">
+                <div className="prose mx-auto">
                     <h3>
                         #{survey.id}: {props.message}
                     </h3>

@@ -38,7 +38,7 @@ export default function Dashboard({
         >
             <Head title="Dashboard" />
 
-            <div className="px-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 rounded bg-white">
                 <div className="px-5 py-4">
                     <div className="prose">
                         <p>
