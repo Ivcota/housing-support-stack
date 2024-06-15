@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyUploadController;
 use App\Http\Middleware\Admin;
+use App\Models\Survey;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $surveys = Auth::user()->localHousingContact->survey()->paginate(500);
+
+    $input = request()->input('search');
+
+    $surveys = Survey::search($input)->where('local_housing_contact_id', Auth::user()->localHousingContact->id)->paginate(100);
     return Inertia::render('Dashboard', [
         'surveys' => $surveys,
     ]);
