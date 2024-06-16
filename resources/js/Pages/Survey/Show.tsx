@@ -3,50 +3,10 @@ import { Link, useForm } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
+import { Comments } from "@/Components/Comments";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { PageProps } from "@/types";
-
-const useTimeAgo = () => {
-    const timeAgo = (date: Date) => {
-        const diff = new Date().getTime() - date.getTime();
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-        if (hours > 0) {
-            return `${hours} hours ago`;
-        }
-
-        if (minutes > 0) {
-            return `${minutes} minutes ago`;
-        }
-
-        return `Just now`;
-    };
-
-    return { timeAgo };
-};
-
-function Comments({ comments }: { comments?: Comment[] }) {
-    const { timeAgo } = useTimeAgo();
-    return (
-        <div className="rounded-md gap-12 flex flex-col">
-            {comments &&
-                comments.map((comment) => (
-                    <div
-                        className="shadow-lg py-5 px-4 rounded-md"
-                        key={comment.id}
-                    >
-                        <div className="text-gray-500 font-bold text-sm flex gap-2">
-                            <div>{comment.user.name}</div>
-                            <div>{timeAgo(new Date(comment.created_at))}</div>
-                        </div>
-                        <p>{comment.comment}</p>
-                    </div>
-                ))}
-        </div>
-    );
-}
 
 const Show = (
     props: PageProps<{
@@ -106,8 +66,8 @@ const Show = (
                             </div>
                         </form>
                     </div>
-                    <div className="pt-4">
-                        <h3 className="text-lg">Comments</h3>
+                    <div className="pt-4 flex flex-col gap-4">
+                        <h3 className="text-lg self-start ">Comments</h3>
                         <Comments comments={comments} />
                     </div>
                 </div>

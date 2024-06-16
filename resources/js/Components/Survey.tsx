@@ -22,7 +22,7 @@ export const Survey = ({ survey }: { survey: SurveyPaginated["data"][0] }) => {
                     </div>
                 </div>
                 <div role="list" className="flex flex-col gap-2">
-                    <Button variant="outlineDestructive" onClick={() => {}}>
+                    <Button variant="outline-destructive" onClick={() => {}}>
                         Archive
                     </Button>
                     <Button

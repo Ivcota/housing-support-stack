@@ -11,7 +11,7 @@ export interface LHC {
     project_housing_contact_id: number;
 }
 
-const Dashboard = ({ auth, lhcs }: PageProps<{ lhcs: LHC[] }>) => {
+const Dashboard = ({ auth }: PageProps<{ lhcs: LHC[] }>) => {
     return (
         <Authenticated
             user={auth.user}
