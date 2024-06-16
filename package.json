@@ -28,8 +28,6 @@
     "dependencies": {
         "@tanstack/react-table": "^8.17.3",
         "lodash": "^4.17.21",
-        "primeicons": "^7.0.0",
-        "primereact": "^10.6.6",
         "react-hot-toast": "^2.4.1"
     }
 }
