@@ -2,9 +2,8 @@ import { Comment, Survey } from "@/types/application";
 import { Link, useForm } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
 import { PageProps } from "@/types";
 
 const useTimeAgo = () => {
@@ -84,12 +83,9 @@ const Show = (
                     <p>
                         <b>Address:</b> {survey.address}
                     </p>
-                    <a
-                        href={`/survey-download/${file}`}
-                        className="btn btn-primary"
-                    >
-                        Download Survey
-                    </a>
+                    <Button role="link" variant="outline">
+                        <a href={`/survey-download/${file}`}>Download Survey</a>
+                    </Button>
 
                     <div className="pt-12">
                         <form
@@ -104,7 +100,7 @@ const Show = (
                             }}
                         >
                             <div className="flex flex-col gap-2">
-                                <InputText
+                                <Input
                                     onChange={(e) =>
                                         setData("comment", e.target.value)
                                     }
@@ -115,7 +111,7 @@ const Show = (
                                         {errors.comment}
                                     </p>
                                 )}
-                                <Button label="Send" />
+                                <Button>Send</Button>
                             </div>
                         </form>
                         <div className="pt-4">

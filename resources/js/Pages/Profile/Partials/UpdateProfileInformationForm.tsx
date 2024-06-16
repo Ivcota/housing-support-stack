@@ -1,11 +1,10 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 
-import { Button } from "primereact/button";
+import { Button } from "@/Components/ui/button";
 import { FormEventHandler } from "react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import { PageProps } from "@/types";
-import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 
@@ -152,9 +151,7 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button size="small" disabled={processing}>
-                        Save
-                    </Button>
+                    <Button disabled={processing}>Save</Button>
 
                     <Transition
                         show={recentlySuccessful}

@@ -2,9 +2,8 @@ import _, { initial } from "lodash";
 import { router, useForm, useRemember } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Button } from "primereact/button";
-import { ConfirmDialog } from "primereact/confirmdialog";
-import { InputText } from "primereact/inputtext";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
 import { PageProps } from "@/types";
 import { Survey } from "@/Components/Survey";
 import { SurveyPaginated } from "@/types/application";
@@ -48,14 +47,13 @@ export default function Dashboard({
                     </p>
                     <Button
                         className="max-w-fit"
-                        size="small"
                         onClick={() => router.get("/upload-survey")}
                     >
                         Upload a Survey
                     </Button>
                 </div>
                 <div
-                    className="flex items-end gap-2 justify-between px-9"
+                    className="flex items-end gap-2 justify-between px-9 max-w-80"
                     role="list"
                 >
                     <form
@@ -69,7 +67,7 @@ export default function Dashboard({
                         <label htmlFor="search" className="text-gray-700">
                             Search
                         </label>
-                        <InputText
+                        <Input
                             type="search"
                             placeholder="Search something..."
                             onChange={(e) =>
@@ -85,8 +83,7 @@ export default function Dashboard({
                             e.preventDefault();
                             router.get("/dashboard");
                         }}
-                        severity="info"
-                        text
+                        variant="outline"
                     >
                         Clear
                     </Button>
@@ -95,7 +92,7 @@ export default function Dashboard({
                     id="surveys"
                     className="flex pt-5 items-center flex-col mx-auto px-9 gap-7 sm:flex-row sm:flex-wrap pb-10"
                 >
-                    <ConfirmDialog />
+                    {/* <ConfirmDialog /> */}
                     {surveys.data.map((survey) => (
                         <Survey survey={survey} key={survey.id} />
                     ))}

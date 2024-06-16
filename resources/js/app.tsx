@@ -1,10 +1,8 @@
 import "./bootstrap";
 import "../css/app.css";
-import "primeicons/primeicons.css";
 
 import { createRoot, hydrateRoot } from "react-dom/client";
 
-import { PrimeReactProvider } from "primereact/api";
 import { Toaster } from "react-hot-toast";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
@@ -22,10 +20,8 @@ createInertiaApp({
         if (import.meta.env.DEV) {
             createRoot(el).render(
                 <>
-                    <PrimeReactProvider>
-                        <App {...props} />
-                        <Toaster />
-                    </PrimeReactProvider>
+                    <App {...props} />
+                    <Toaster />
                 </>
             );
             return;
@@ -34,10 +30,8 @@ createInertiaApp({
         hydrateRoot(
             el,
             <>
-                <PrimeReactProvider value={{ unstyled: true, pt: {} }}>
-                    <App {...props} />
-                    <Toaster />
-                </PrimeReactProvider>
+                <App {...props} />
+                <Toaster />
             </>
         );
     },
