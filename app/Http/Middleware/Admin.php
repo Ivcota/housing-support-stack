@@ -17,12 +17,12 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            if ($user->role !== 'admin') {
-                return redirect('dashboard');
-            }
-        }
+        // if (Auth::check()) {
+        //     $user = Auth::user();
+        //     if ($user->role !== 'admin') {
+        //         return redirect('dashboard');
+        //     }
+        // }
 
         return $next($request);
     }
