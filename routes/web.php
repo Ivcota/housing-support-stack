@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SurveyUploadController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Middleware\Admin;
 use App\Models\Survey;
 use Illuminate\Foundation\Application;
@@ -44,18 +44,18 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get(
         '/survey/{id}',
-        [SurveyUploadController::class, 'show']
+        [SurveyController::class, 'show']
     )->name('survey.show');
-    Route::delete('/survey/{id}', [SurveyUploadController::class, 'delete'])->name('survey.delete');
+    Route::delete('/survey/{id}', [SurveyController::class, 'delete'])->name('survey.delete');
     Route::get(
         '/upload-survey',
-        [SurveyUploadController::class, 'view']
+        [SurveyController::class, 'view']
     )->name('survey.upload');
     Route::post(
         '/upload-survey',
-        [SurveyUploadController::class, 'upload']
+        [SurveyController::class, 'upload']
     )->name('survey.upload.survey');
-    Route::get('/survey-download/{fileName}', [SurveyUploadController::class, 'download'])->name('survey.download');
+    Route::get('/survey-download/{fileName}', [SurveyController::class, 'download'])->name('survey.download');
 });
 
 Route::middleware('auth')->group(function () {

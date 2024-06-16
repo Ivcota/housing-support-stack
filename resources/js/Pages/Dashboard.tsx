@@ -3,12 +3,12 @@ import { router, useForm, useRemember } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Button } from "primereact/button";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import { PageProps } from "@/types";
 import { Survey } from "@/Components/Survey";
 import { SurveyPaginated } from "@/types/application";
 import toast from "react-hot-toast";
-import { useDebounce } from "primereact/hooks";
 import { useEffect } from "react";
 
 const useDashboard = () => {
@@ -43,7 +43,7 @@ export default function Dashboard({
                         Hey {auth.user.name} 👋
                     </h1>
                     <p>
-                        Welcome to your survey dashboard. Submit surveys’ and
+                        Welcome to your survey dashboard. Submit surveys and
                         view their progress.
                     </p>
                     <Button
@@ -71,6 +71,7 @@ export default function Dashboard({
                         </label>
                         <InputText
                             type="search"
+                            placeholder="Search something..."
                             onChange={(e) =>
                                 setData({
                                     search: e.target.value,
@@ -94,6 +95,7 @@ export default function Dashboard({
                     id="surveys"
                     className="flex pt-5 items-center flex-col mx-auto px-9 gap-7 sm:flex-row sm:flex-wrap pb-10"
                 >
+                    <ConfirmDialog />
                     {surveys.data.map((survey) => (
                         <Survey survey={survey} key={survey.id} />
                     ))}

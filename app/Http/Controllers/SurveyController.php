@@ -2,65 +2,118 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSurveyRequest;
-use App\Http\Requests\UpdateSurveyRequest;
+use App\Models\Comment;
 use App\Models\Survey;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+
+
 
 class SurveyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function download($fileName)
     {
-        //
+        return response()->download(storage_path('app/surveys/' . $fileName));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function view()
     {
-        //
+        return Inertia::render('Survey/Upload');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSurveyRequest $request)
+    public function show($id)
     {
-        //
+        $survey = Auth::user()->localHousingContact->survey()->find($id);
+
+
+        if (!$survey) {
+            return redirect()->route('dashboard', [
+                'message' => 'Survey not found',
+            ]);
+        }
+
+        $message = $this->getMessage($survey);
+
+        $comments = Comment::where('survey_id', $id)->orderBy('id', 'desc')->get();
+
+        return Inertia::render('Survey/Show', [
+            'survey' => $survey,
+            'file' => $survey->file_location,
+            'message' => $message,
+            'comments' => $comments->map(function ($comment) {
+                return [
+                    'id' => $comment->id,
+                    'user_id' => $comment->user_id,
+                    'comment' => $comment->comment,
+                    'created_at' => $comment->created_at,
+                    'updated_at' => $comment->updated_at,
+                    'user' => [
+                        'id' => $comment->user_id,
+                        'name' => $comment->user->name,
+                    ],
+                ];
+            }),
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Survey $survey)
+    public function upload(Request $request)
     {
-        //
+        $request->validate([
+            'address' => ['required', 'string', 'max:255',],
+            'survey' => ['required', 'file',],
+        ]);
+
+        $path = $request->file('survey')->store('surveys');
+        $fileName = basename($path);
+
+        $survey = new Survey();
+
+
+        $survey->fill([
+            'local_housing_contact_id' => Auth::user()->localHousingContact->id,
+            'address' => $request->address,
+            'file_location' => $fileName,
+        ])->save();
+
+
+
+        return redirect()->route('survey.show', [
+            'id' => $survey->id,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Survey $survey)
+    private function getMessage($survey)
     {
-        //
+        switch ($survey->status) {
+            case 'needs_uploader_action':
+                $message = "There's something you need to do with this survey. See comments.";
+                break;
+            case 'pre_review':
+                $message = 'This survey is in pre-review';
+                break;
+            case 'in_review':
+                $message = 'This survey is in review';
+                break;
+            case 'approved':
+                $message = 'This survey has been approved';
+                break;
+            case 'rejected':
+                $message = 'This survey has been rejected';
+                break;
+            default:
+                $message = 'The survey is not in a valid state';
+                break;
+        }
+
+        return $message;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSurveyRequest $request, Survey $survey)
+    public function delete($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Survey $survey)
-    {
-        //
+        $survey = Auth::user()->localHousingContact->survey()->find($id);
+        $survey->delete();
+        return redirect()->route('dashboard');
     }
 }
