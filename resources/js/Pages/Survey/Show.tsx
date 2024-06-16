@@ -4,6 +4,7 @@ import { Link, useForm } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
+import { Label } from "@radix-ui/react-label";
 import { PageProps } from "@/types";
 
 const useTimeAgo = () => {
@@ -62,31 +63,20 @@ const Show = (
     });
 
     return (
-        <Authenticated
-            user={props.auth.user}
-            header={
-                <div className="flex flex-col gap-2">
-                    <Link href="/dashboard" className="link link-primary">
-                        Back
-                    </Link>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                        Display Survey
-                    </h2>
-                </div>
-            }
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white mt-6 py-6 rounded">
-                <div className="prose mx-auto">
-                    <h3>
-                        #{survey.id}: {props.message}
-                    </h3>
+        <Authenticated user={props.auth.user}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white py-6 rounded">
+                <div className="flex flex-col gap-3">
+                    <Link href="/dashboard">Back</Link>
+                    <h1 className="font-bold text-lg">{survey.address}</h1>
                     <p>
-                        <b>Address:</b> {survey.address}
+                        This survey was uploaded on someDate in {survey.status}.
                     </p>
-                    <Button role="link" variant="outline">
-                        <a href={`/survey-download/${file}`}>Download Survey</a>
+                    <Button role="link" variant="outline" className="max-w-32">
+                        <a href={`/survey-download/${file}`}>View</a>
                     </Button>
+                </div>
 
+                <div className="prose mx-auto">
                     <div className="pt-12">
                         <form
                             onSubmit={(e) => {
@@ -99,6 +89,7 @@ const Show = (
                                 });
                             }}
                         >
+                            <Label htmlFor="comment">Comment</Label>
                             <div className="flex flex-col gap-2">
                                 <Input
                                     onChange={(e) =>
@@ -114,9 +105,10 @@ const Show = (
                                 <Button>Send</Button>
                             </div>
                         </form>
-                        <div className="pt-4">
-                            <Comments comments={comments} />
-                        </div>
+                    </div>
+                    <div className="pt-4">
+                        <h3 className="text-lg">Comments</h3>
+                        <Comments comments={comments} />
                     </div>
                 </div>
             </div>
