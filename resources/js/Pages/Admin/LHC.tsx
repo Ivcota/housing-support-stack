@@ -1,5 +1,4 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Card } from "primereact/card";
 import { PageProps } from "@/types";
 
 export interface LHC {
@@ -21,9 +20,7 @@ const LHC = ({ auth, lhc }: PageProps<{ lhc: LHC }>) => {
                 </h2>
             }
             user={auth.user}
-        >
-            <Card title={lhc.congregation} />
-        </Authenticated>
+        ></Authenticated>
     );
 };
 

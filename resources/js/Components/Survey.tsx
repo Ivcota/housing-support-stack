@@ -1,9 +1,7 @@
 import { Button } from "./ui/button";
 import { FileIcon } from "@radix-ui/react-icons";
-// import { Button } from "primereact/button";
 import { SurveyPaginated } from "@/types/application";
 import _ from "lodash";
-// import { confirmDialog } from "primereact/confirmdialog";
 import { router } from "@inertiajs/react";
 
 export const Survey = ({ survey }: { survey: SurveyPaginated["data"][0] }) => {
