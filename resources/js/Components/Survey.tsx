@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import { FileIcon } from "@radix-ui/react-icons";
 // import { Button } from "primereact/button";
 import { SurveyPaginated } from "@/types/application";
 import _ from "lodash";
@@ -8,8 +9,8 @@ import { router } from "@inertiajs/react";
 export const Survey = ({ survey }: { survey: SurveyPaginated["data"][0] }) => {
     return (
         <>
-            <div className="flex shadow-lg bg-white border-gray-500 border gap-4 py-7 justify-center items-center rounded-lg px-5 w-full md:w-80 ">
-                <i className="pi pi-file"></i>
+            <div className="flex shadow-lg bg-white border-gray-500 border gap-4 py-7 justify-between items-center rounded-lg sm:px-5 px-7 w-full md:w-80 ">
+                <FileIcon className="w-5 h-5" />
                 <div role="list">
                     <div role="listitem">
                         {_.truncate(survey.address, { length: 15 })}
