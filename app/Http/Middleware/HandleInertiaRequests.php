@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-            'canViewAdmin' => $request->user()->can('view-admin'),
+            'canViewAdmin' => $request->user()?->can('view-admin'),
         ];
     }
 }
