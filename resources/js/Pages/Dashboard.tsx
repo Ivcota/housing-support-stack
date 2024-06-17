@@ -75,7 +75,6 @@ export default function Dashboard({
                                     search: e.target.value,
                                 })
                             }
-                            className=""
                         />
                     </form>
                     <Button

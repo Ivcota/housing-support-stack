@@ -1,3 +1,15 @@
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
+
 import { Button } from "./ui/button";
 import { FileIcon } from "@radix-ui/react-icons";
 import { SurveyPaginated } from "@/types/application";
@@ -22,9 +34,45 @@ export const Survey = ({ survey }: { survey: SurveyPaginated["data"][0] }) => {
                     </div>
                 </div>
                 <div role="list" className="flex flex-col gap-2">
-                    <Button variant="outline-destructive" onClick={() => {}}>
-                        Archive
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                variant="outline-destructive"
+                                onClick={() => {}}
+                            >
+                                Archive
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will
+                                    remove your survey from being viewed within
+                                    the application.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={() => {
+                                        router.delete(
+                                            route("survey.delete", {
+                                                id: survey.id,
+                                            }),
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Archive
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                     <Button
                         onClick={() => router.get(`/survey/${survey.id}/`)}
                         className="flex justify-center max-w-full"
