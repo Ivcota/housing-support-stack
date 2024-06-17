@@ -10,7 +10,7 @@ import { PageProps } from "@/types";
 import { UploadIcon } from "@radix-ui/react-icons";
 
 const UploadSurvey = ({ auth }: PageProps) => {
-    const { post, setData, errors, data } = useForm<{
+    const { post, setData, errors, data, processing } = useForm<{
         survey?: File;
         address: string;
     }>({
@@ -86,6 +86,7 @@ const UploadSurvey = ({ auth }: PageProps) => {
                         <Button
                             className="p-button mt-4 flex gap-2 items-center"
                             type="submit"
+                            disabled={processing}
                         >
                             Upload & Submit <UploadIcon />
                         </Button>
