@@ -1,5 +1,5 @@
 import { Comment, Survey } from "@/types/application";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
@@ -31,8 +31,8 @@ const Show = (
                     <p>
                         This survey was uploaded on someDate in {survey.status}.
                     </p>
-                    <Button role="link" variant="outline" className="max-w-32">
-                        <a href={`/survey-download/${file}`}>View</a>
+                    <Button asChild variant="outline" className="w-32">
+                        <a href={file}>View</a>
                     </Button>
                 </div>
 

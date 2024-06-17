@@ -12,6 +12,7 @@
         "laravel/scout": "^10.9",
         "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.9",
+        "league/flysystem-aws-s3-v3": "^3.28",
         "propaganistas/laravel-phone": "^5.3",
         "socialiteproviders/google": "^4.1",
         "tightenco/ziggy": "^2.0"

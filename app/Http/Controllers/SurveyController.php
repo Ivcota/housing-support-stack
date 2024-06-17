@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 
@@ -15,7 +16,8 @@ class SurveyController extends Controller
 
     public function download($fileName)
     {
-        return response()->download(storage_path('app/surveys/' . $fileName));
+        $url = Storage::url('surveys/' . $fileName);
+        return response()->download($url);
     }
 
     public function view()
@@ -37,10 +39,11 @@ class SurveyController extends Controller
         $message = $this->getMessage($survey);
 
         $comments = Comment::where('survey_id', $id)->orderBy('id', 'desc')->get();
+        $url = Storage::url('surveys/' . $survey->file_location);
 
         return Inertia::render('Survey/Show', [
             'survey' => $survey,
-            'file' => $survey->file_location,
+            'file' => $url,
             'message' => $message,
             'comments' => $comments->map(function ($comment) {
                 return [
@@ -65,7 +68,8 @@ class SurveyController extends Controller
             'survey' => ['required', 'file',],
         ]);
 
-        $path = $request->file('survey')->store('surveys');
+
+        $path = Storage::disk('digitalocean')->putFile('surveys', $request->file('survey'), 'public');
         $fileName = basename($path);
 
         $survey = new Survey();
