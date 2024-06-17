@@ -11,6 +11,10 @@ class AdminDashboardController extends Controller
     public function index(Request $request)
     {
 
+        // if (!$request->user()->can('view-admin')) {
+        //     return redirect()->route('dashboard');
+        // }
+
         $lhcs = $request->user()->projectHousingContact->localHousingContact->map(function ($lhc) {
             return [
                 'id' => $lhc->id,

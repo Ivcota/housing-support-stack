@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
-use App\Http\Middleware\Admin;
 use App\Models\Survey;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -65,7 +64,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth', Admin::class])->group(function () {
+Route::middleware(['auth', 'can:view-admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/lhc/{id}', [AdminDashboardController::class, 'show'])->name('admin.lhc.show');
 });
