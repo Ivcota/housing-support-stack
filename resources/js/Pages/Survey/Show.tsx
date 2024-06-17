@@ -1,5 +1,5 @@
 import { Comment, Survey } from "@/types/application";
-import { Link, router, useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
@@ -7,6 +7,7 @@ import { Comments } from "@/Components/Comments";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { PageProps } from "@/types";
+import { format } from "date-fns";
 
 const Show = (
     props: PageProps<{
@@ -29,7 +30,9 @@ const Show = (
                     <Link href="/dashboard">Back</Link>
                     <h1 className="font-bold text-lg">{survey.address}</h1>
                     <p>
-                        This survey was uploaded on someDate in {survey.status}.
+                        This survey was uploaded on{" "}
+                        {format(new Date(survey.created_at), "MMMM d, yyyy")}{" "}
+                        and currently has a status of {survey.status}.
                     </p>
                     <Button asChild variant="outline" className="w-32">
                         <a href={file}>View</a>
