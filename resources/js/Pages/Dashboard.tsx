@@ -36,7 +36,7 @@ export default function Dashboard({
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <div className="bg-white">
+            <div className="bg-white max-w-7xl mx-auto">
                 <div className="px-9 bg-white py-6 flex flex-col gap-3">
                     <h1 className="text-xl font-bold">
                         Hey {auth.user.name} 👋

@@ -88,6 +88,45 @@ class SurveyController extends Controller
         ]);
     }
 
+    public function editPage($id)
+    {
+        $survey = Auth::user()?->localHousingContact?->survey()->find($id);
+
+        if (!$survey) {
+            return redirect()->route('dashboard', [
+                'message' => 'Survey not found',
+            ]);
+        }
+
+        return Inertia::render('Survey/Edit', [
+            'survey' => $survey,
+            'back' => url()->previous(),
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'address' => ['string', 'max:255'],
+        ]);
+
+        $survey = Auth::user()?->localHousingContact?->survey()->find($id);
+
+        if (!$survey) {
+            return redirect()->route('dashboard', [
+                'message' => 'Survey not found',
+            ]);
+        }
+
+        $survey->fill([
+            'address' => $request->address,
+        ])->save();
+
+        return redirect()->route('survey.show', [
+            'id' => $survey->id,
+        ]);
+    }
+
     private function getMessage($survey)
     {
         switch ($survey->status) {

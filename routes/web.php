@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
         [SurveyController::class, 'upload']
     )->name('survey.upload.survey');
     Route::get('/survey-download/{fileName}', [SurveyController::class, 'download'])->name('survey.download');
+    Route::get('/survey/{id}/edit', [SurveyController::class, 'editPage'])->name('survey.edit');
+    Route::patch('/survey/{id}', [SurveyController::class, 'update'])->name('survey.update');
 });
 
 Route::middleware('auth')->group(function () {

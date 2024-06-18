@@ -34,9 +34,20 @@ const Show = (
                         {format(new Date(survey.created_at), "MMMM d, yyyy")}{" "}
                         and currently has a status of {survey.status}.
                     </p>
-                    <Button asChild variant="outline" className="w-32">
-                        <a href={file}>View</a>
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button asChild className="w-32">
+                            <a href={file}>View</a>
+                        </Button>
+                        <Button asChild variant="outline" className="w-32">
+                            <Link
+                                href={route("survey.edit", {
+                                    id: survey.id,
+                                })}
+                            >
+                                Edit
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="prose mx-auto">

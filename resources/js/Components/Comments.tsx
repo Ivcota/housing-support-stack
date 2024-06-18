@@ -1,5 +1,7 @@
 import { Button } from "./ui/button";
 import { Comment } from "@/types/application";
+import { PageProps } from "@/types";
+import { usePage } from "@inertiajs/react";
 
 const useTimeAgo = () => {
     const timeAgo = (date: Date) => {
@@ -22,6 +24,9 @@ const useTimeAgo = () => {
 
 const CommentComponent = ({ comment }: { comment: Comment }) => {
     const { timeAgo } = useTimeAgo();
+    const {
+        props: { auth },
+    } = usePage<PageProps>();
     return (
         <div className="flex flex-col gap-2 sm:max-w-sm">
             <div className="text-sm flex gap-2">
@@ -29,9 +34,11 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
                 <div>{timeAgo(new Date(comment.created_at))}</div>
             </div>
             <p>{comment.comment}</p>
-            <Button variant="outline-destructive" className="self-end w-20">
-                Delete
-            </Button>
+            {auth.user.id === comment.user_id && (
+                <Button variant="outline-destructive" className="self-end w-20">
+                    Delete
+                </Button>
+            )}
         </div>
     );
 };
