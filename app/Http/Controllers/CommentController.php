@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Notifications\UserCommented;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class CommentController extends Controller
 {
@@ -32,11 +34,13 @@ class CommentController extends Controller
             'survey_id' => 'required',
         ]);
 
-        Comment::create([
+        $comment = Comment::create([
             'comment' => $request->comment,
             'survey_id' => $request->survey_id,
             'user_id' => auth()->user()->id,
         ]);
+
+        Notification::route('slack', '#housing-support-stack')->notify(new UserCommented($comment));
 
         return redirect()->back();
     }
