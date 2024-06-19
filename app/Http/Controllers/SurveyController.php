@@ -18,6 +18,15 @@ use Inertia\Inertia;
 class SurveyController extends Controller
 {
 
+    public function index()
+    {
+        $input = request()->input('search');
+        $surveys = Survey::search($input)->where('local_housing_contact_id', Auth::user()->localHousingContact->id)->paginate(100);
+        return Inertia::render('Dashboard', [
+            'surveys' => $surveys,
+        ]);
+    }
+
     public function download($fileName)
     {
         $url = Storage::url('surveys/' . $fileName);

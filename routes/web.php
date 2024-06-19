@@ -5,9 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
-use App\Models\Survey;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
@@ -27,19 +25,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    $input = request()->input('search');
-    $surveys = Survey::search($input)->where('local_housing_contact_id', Auth::user()->localHousingContact->id)->paginate(100);
-    return Inertia::render('Dashboard', [
-        'surveys' => $surveys,
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
+/*
+*  Survey routes
+*/
 Route::middleware('auth')->group(function () {
-    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
-});
-
-Route::middleware('auth')->group(function () {
+    Route::get(
+        '/dashboard',
+        [SurveyController::class, 'index']
+    );
     Route::get(
         '/survey/{id}',
         [SurveyController::class, 'show']
@@ -58,13 +52,25 @@ Route::middleware('auth')->group(function () {
     Route::patch('/survey/{id}', [SurveyController::class, 'update'])->name('survey.update');
 });
 
+/*
+* Comment routes
+*/
+Route::middleware('auth')->group(function () {
+    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+});
+
+/*
+* Profile routes
+*/
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+/*
+* Admin routes
+*/
 Route::middleware(['auth', 'can:view-admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/lhc/{id}', [AdminDashboardController::class, 'show'])->name('admin.lhc.show');
