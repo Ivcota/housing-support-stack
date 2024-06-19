@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
@@ -14,7 +14,7 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
-Route::get('/auth/callback', [AuthenticatedSessionController::class, 'googleStore'])->name('auth.google');
+Route::get('/auth/callback', [RegisteredUserController::class, 'googleStore'])->name('auth.google');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get(
         '/dashboard',
         [SurveyController::class, 'index']
-    );
+    )->name('dashboard');
     Route::get(
         '/survey/{id}',
         [SurveyController::class, 'show']

@@ -1,6 +1,7 @@
 import { FormEventHandler, useEffect } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 
+import { Button } from "@/Components/ui/button";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -50,7 +51,6 @@ export default function Register() {
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -67,7 +67,6 @@ export default function Register() {
 
                     <InputError message={errors.email} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="phone" value="Phone" />
 
@@ -84,7 +83,6 @@ export default function Register() {
 
                     <InputError message={errors.phone} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="congregation" value="Congregation" />
 
@@ -106,7 +104,6 @@ export default function Register() {
                         className="mt-2"
                     />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
 
@@ -123,7 +120,6 @@ export default function Register() {
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
@@ -148,8 +144,7 @@ export default function Register() {
                         className="mt-2"
                     />
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-end mt-4 gap-4">
                     <Link
                         href={route("login")}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -157,9 +152,7 @@ export default function Register() {
                         Already registered?
                     </Link>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                    <Button disabled={processing}>Register</Button>
                 </div>
             </form>
         </GuestLayout>

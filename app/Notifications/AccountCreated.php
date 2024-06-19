@@ -2,22 +2,23 @@
 
 namespace App\Notifications;
 
-use App\Models\Survey;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Slack\SlackMessage;
 
-class SurveyUploaded extends Notification implements ShouldQueue
+class AccountCreated extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Survey $survey)
+    public function __construct(public User $user)
     {
+        //
     }
 
     /**
@@ -36,13 +37,14 @@ class SurveyUploaded extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name . '. You can view it here: ' . url('/survey/' . $this->survey->id));
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     public function toSlack(object $notifiable): SlackMessage
     {
-        return (new SlackMessage)
-            ->text('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name . '. You can view it here: ' . url('/survey/' . $this->survey->id));
+        return (new SlackMessage)->text('New user created: ' . $this->user->name);
     }
 
     /**

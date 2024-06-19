@@ -1,6 +1,7 @@
 import { FormEventHandler, useEffect } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 
+import { Button } from "@/Components/ui/button";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
@@ -92,7 +93,7 @@ export default function Login({
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-end mt-4 gap-3">
                     {canResetPassword && (
                         <Link
                             href={route("password.request")}
@@ -102,12 +103,10 @@ export default function Login({
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                    <a className="ms-4" href="auth/redirect/">
-                        Login with Google
-                    </a>
+                    <Button disabled={processing}>Log in</Button>
+                    <Button variant="outline" asChild>
+                        <a href="auth/redirect/">Login with Google</a>
+                    </Button>
                 </div>
             </form>
         </GuestLayout>

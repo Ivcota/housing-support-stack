@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\LocalHousingContact;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
-use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -41,32 +39,7 @@ class AuthenticatedSessionController extends Controller
         return $this->routeDashboard($user);
     }
 
-    public function googleStore(): RedirectResponse
-    {
-        $googleUser = Socialite::driver('google')->user();
-
-        $user = User::where('email', $googleUser->email)->first();
-
-        if (!$user) {
-            $user = User::create([
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'password' => bcrypt($googleUser->id),
-            ]);
-
-            LocalHousingContact::create([
-                'user_id' => $user->id,
-                'congregation' => 'Please select a congregation',
-            ]);
-        }
-
-
-        Auth::login($user);
-
-        return $this->routeDashboard($user);
-    }
-
-    private function routeDashboard(User $user): RedirectResponse
+    public static function routeDashboard(User $user): RedirectResponse
     {
         if ($user->role === 'admin') {
             return redirect()->intended(route('admin.dashboard', absolute: false));

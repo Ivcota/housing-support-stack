@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\LocalHousingContact;
 use App\Models\User;
+use App\Notifications\AccountCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisteredUserController extends Controller
 {
@@ -55,6 +58,36 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        Notification::route('slack', '#housing-support-stack')->notify(new AccountCreated($user));
+
         return redirect(route('dashboard', absolute: false));
+    }
+
+    public function googleStore(): RedirectResponse
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::where('email', $googleUser->email)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => bcrypt($googleUser->id),
+            ]);
+
+            LocalHousingContact::create([
+                'user_id' => $user->id,
+                'congregation' => 'Please select a congregation',
+            ]);
+
+            Notification::route('slack', '#housing-support-stack')->notify(new AccountCreated($user));
+        }
+
+
+        Auth::login($user);
+
+
+        return AuthenticatedSessionController::routeDashboard($user);
     }
 }
