@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SurveyUploaded;
 use App\Models\Comment;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -81,7 +83,9 @@ class SurveyController extends Controller
             'file_location' => $fileName,
         ])->save();
 
-
+        Mail::to('ivcotad@gmail.com')->queue(
+            new SurveyUploaded($survey)
+        );
 
         return redirect()->route('survey.show', [
             'id' => $survey->id,
