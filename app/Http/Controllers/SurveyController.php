@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Mail\SurveyUploaded;
 use App\Models\Comment;
 use App\Models\Survey;
+use App\Notifications\SurveyUploaded as NotificationsSurveyUploaded;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -86,6 +88,8 @@ class SurveyController extends Controller
         Mail::to('ivcotad@gmail.com')->queue(
             new SurveyUploaded($survey)
         );
+
+        Notification::route('slack', '#housing-support-stack')->notify(new NotificationsSurveyUploaded($survey));
 
         return redirect()->route('survey.show', [
             'id' => $survey->id,

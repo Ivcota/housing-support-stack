@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 
+
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
@@ -27,9 +28,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-
     $input = request()->input('search');
-
     $surveys = Survey::search($input)->where('local_housing_contact_id', Auth::user()->localHousingContact->id)->paginate(100);
     return Inertia::render('Dashboard', [
         'surveys' => $surveys,
