@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\ActionsBlock;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
 use Illuminate\Notifications\Slack\SlackMessage;
 
 class SurveyUploaded extends Notification implements ShouldQueue
@@ -42,7 +44,14 @@ class SurveyUploaded extends Notification implements ShouldQueue
     public function toSlack(object $notifiable): SlackMessage
     {
         return (new SlackMessage)
-            ->text('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name . '. You can view it here: ' . url('/survey/' . $this->survey->id));
+            ->text('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name . '.')
+            ->headerBlock('Upload Details')
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->text('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name);
+            })
+            ->actionsBlock(function (ActionsBlock $block) {
+                $block->button('View Survey')->url(route('survey.show', $this->survey->id));
+            });
     }
 
     /**

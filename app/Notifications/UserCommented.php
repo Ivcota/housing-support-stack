@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Slack\BlockKit\Blocks\ContextBlock;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\ActionsBlock;
 use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
 use Illuminate\Notifications\Slack\SlackMessage;
 
@@ -48,11 +48,15 @@ class UserCommented extends Notification implements ShouldQueue
     {
         return (new SlackMessage)
             ->text($this->comment->user->name . ' has commented on survey location ' . $this->comment->survey->address . '.')
+            ->headerBlock('Comment')
             ->sectionBlock(function (SectionBlock $block) {
                 $block->text($this->comment->user->name . " says:");
             })
             ->sectionBlock(function (SectionBlock $block) {
                 $block->text($this->comment->comment);
+            })
+            ->actionsBlock(function (ActionsBlock $block) {
+                $block->button('View Comment')->url(route('survey.show', $this->comment->survey->id));
             });
     }
 

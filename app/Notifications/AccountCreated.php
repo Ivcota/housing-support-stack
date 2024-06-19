@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
 use Illuminate\Notifications\Slack\SlackMessage;
 
 class AccountCreated extends Notification implements ShouldQueue
@@ -44,7 +45,10 @@ class AccountCreated extends Notification implements ShouldQueue
 
     public function toSlack(object $notifiable): SlackMessage
     {
-        return (new SlackMessage)->text('New user created: ' . $this->user->name);
+        return (new SlackMessage)->text('New user created: ' . $this->user->name)
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->text('Username: ' . $this->user->name);
+            });
     }
 
     /**
