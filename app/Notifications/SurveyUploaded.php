@@ -28,7 +28,7 @@ class SurveyUploaded extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['slack'];
+        return ['mail', 'slack'];
     }
 
     /**
@@ -37,9 +37,7 @@ class SurveyUploaded extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->line('A survey has been uploaded by ' . $this->survey->localHousingContact->user->name . '. You can view it here: ' . url('/survey/' . $this->survey->id));
     }
 
     public function toSlack(object $notifiable): SlackMessage

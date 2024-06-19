@@ -1,12 +1,10 @@
-import _, { initial } from "lodash";
-import { router, useForm, useRemember } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { PageProps } from "@/types";
-import { Survey } from "@/Components/Survey";
-import { SurveyPaginated } from "@/types/application";
+import { Surveys } from "@/Components/Survey";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
@@ -24,10 +22,7 @@ const useDashboard = () => {
     };
 };
 
-export default function Dashboard({
-    auth,
-    surveys,
-}: PageProps<{ surveys: SurveyPaginated }>) {
+export default function Dashboard({ auth }: PageProps) {
     useDashboard();
 
     const { get, setData } = useForm({
@@ -87,15 +82,7 @@ export default function Dashboard({
                         Clear
                     </Button>
                 </div>
-                <div
-                    id="surveys"
-                    className="flex pt-5 items-center flex-col mx-auto px-9 gap-7 sm:flex-row sm:flex-wrap pb-10"
-                >
-                    {/* <ConfirmDialog /> */}
-                    {surveys.data.map((survey) => (
-                        <Survey survey={survey} key={survey.id} />
-                    ))}
-                </div>
+                <Surveys />
             </div>
         </AuthenticatedLayout>
     );

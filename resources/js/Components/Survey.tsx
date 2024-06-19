@@ -9,12 +9,28 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
+import { router, usePage } from "@inertiajs/react";
 
 import { Button } from "./ui/button";
 import { FileIcon } from "@radix-ui/react-icons";
 import { SurveyPaginated } from "@/types/application";
 import _ from "lodash";
-import { router } from "@inertiajs/react";
+
+export const Surveys = () => {
+    const {
+        props: { surveys },
+    } = usePage<{ surveys: SurveyPaginated }>();
+    return (
+        <div
+            id="surveys"
+            className="flex pt-5 items-center flex-col mx-auto px-9 gap-7 sm:flex-row sm:flex-wrap pb-10"
+        >
+            {surveys.data.map((survey) => (
+                <Survey survey={survey} key={survey.id} />
+            ))}
+        </div>
+    );
+};
 
 export const Survey = ({ survey }: { survey: SurveyPaginated["data"][0] }) => {
     return (
