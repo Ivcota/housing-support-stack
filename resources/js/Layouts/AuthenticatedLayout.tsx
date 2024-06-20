@@ -153,6 +153,12 @@ export default function Authenticated({
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("admin.dashboard")}
+                            active={route().current("admin.dashboard")}
+                        >
+                            Admin Dashboard
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
