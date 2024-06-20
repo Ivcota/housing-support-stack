@@ -43,6 +43,9 @@ class SurveyController extends Controller
     {
         $survey = Auth::user()->localHousingContact->survey()->find($id);
 
+        if (Auth::user()->role === 'admin') {
+            $survey = Survey::find($id);
+        }
 
         if (!$survey) {
             return redirect()->route('dashboard', [
