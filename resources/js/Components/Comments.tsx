@@ -1,7 +1,8 @@
+import { router, usePage } from "@inertiajs/react";
+
 import { Button } from "./ui/button";
 import { Comment } from "@/types/application";
 import { PageProps } from "@/types";
-import { usePage } from "@inertiajs/react";
 
 const useTimeAgo = () => {
     const timeAgo = (date: Date) => {
@@ -35,7 +36,15 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
             </div>
             <p>{comment.comment}</p>
             {auth.user.id === comment.user_id && (
-                <Button variant="outline-destructive" className="self-end w-20">
+                <Button
+                    onClick={() =>
+                        router.delete(
+                            route("comment.delete", { id: comment.id })
+                        )
+                    }
+                    variant="outline-destructive"
+                    className="self-end w-20"
+                >
                     Delete
                 </Button>
             )}
