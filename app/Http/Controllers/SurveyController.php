@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\RefineSurveyAddress;
 use App\Mail\SurveyUploaded;
 use App\Models\Comment;
 use App\Models\Survey;
@@ -98,6 +99,7 @@ class SurveyController extends Controller
             new SurveyUploaded($survey)
         );
 
+        RefineSurveyAddress::dispatch($survey);
         Notification::route('slack', '#housing-support-stack')->notify(new NotificationsSurveyUploaded($survey));
 
         return redirect()->route('survey.show', [
@@ -138,6 +140,8 @@ class SurveyController extends Controller
         $survey->fill([
             'address' => $request->address,
         ])->save();
+
+        RefineSurveyAddress::dispatch($survey);
 
         return redirect()->route('survey.show', [
             'id' => $survey->id,
