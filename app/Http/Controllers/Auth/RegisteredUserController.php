@@ -87,7 +87,18 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($user->localHousingContact->congregation === 'Please select a congregation') {
+            return redirect()->route('auth.confirmCongregation', [
+                'localHousingContact' => $user->localHousingContact->id,
+            ]);
+        }
+
 
         return AuthenticatedSessionController::routeDashboard($user);
+    }
+
+    public function confirmCongregation(Request $request)
+    {
+        return Inertia::render('Auth/ConfirmCongregation');
     }
 }

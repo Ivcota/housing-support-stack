@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LocalHousingContact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocalHousingContactController extends Controller
 {
@@ -50,9 +51,23 @@ class LocalHousingContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LocalHousingContact $localHousingContact)
+    public function update(Request $request)
     {
-        //
+
+        $localHousingContact = Auth::user()->localHousingContact;
+
+
+        $request->validate([
+            'congregation' => 'required',
+        ]);
+
+        $localHousingContact->fill([
+            'congregation' => $request->congregation,
+        ]);
+
+        $localHousingContact->save();
+
+        return redirect()->route('dashboard');
     }
 
     /**
