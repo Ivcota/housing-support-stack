@@ -68,8 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/confirm-congregation', [RegisteredUserController::class, 'confirmCongregation'])->name('auth.confirmCongregation');
-    Route::patch('/confirm-congregation', [LocalHousingContactController::class, 'update'])->name('auth.confirmCongregation.update');
+    Route::get('/final-details-collect', [RegisteredUserController::class, 'finalDetailsCollect'])->name('auth.final-details-collect');
+    Route::patch('/final-details-collect', [LocalHousingContactController::class, 'update'])->name('auth.final-details-collect.update');
 });
 
 /*

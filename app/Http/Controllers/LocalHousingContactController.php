@@ -56,16 +56,22 @@ class LocalHousingContactController extends Controller
 
         $localHousingContact = Auth::user()->localHousingContact;
 
-
         $request->validate([
             'congregation' => 'required',
+            'phone' => 'phone:US',
         ]);
 
         $localHousingContact->fill([
             'congregation' => $request->congregation,
         ]);
 
+        $localHousingContact->user->fill([
+            'phone' => $request->phone,
+        ]);
+
+
         $localHousingContact->save();
+        $localHousingContact->user->save();
 
         return redirect()->route('dashboard');
     }
