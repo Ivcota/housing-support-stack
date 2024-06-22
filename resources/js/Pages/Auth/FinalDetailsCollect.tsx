@@ -1,4 +1,5 @@
 import { Button } from "@/Components/ui/button";
+import Guest from "@/Layouts/GuestLayout";
 import { Input } from "@/Components/ui/input";
 import InputError from "@/Components/InputError";
 import { Label } from "@/Components/ui/label";
@@ -11,7 +12,7 @@ const FinalDetailsCollect = () => {
     });
 
     return (
-        <div>
+        <Guest>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -58,7 +59,7 @@ const FinalDetailsCollect = () => {
                     <Button type="submit">Submit</Button>
                 </div>
             </form>
-        </div>
+        </Guest>
     );
 };
 
