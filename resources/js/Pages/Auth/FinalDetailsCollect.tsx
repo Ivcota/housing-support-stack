@@ -1,5 +1,6 @@
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
+import InputError from "@/Components/InputError";
 import { Label } from "@/Components/ui/label";
 import { useForm } from "@inertiajs/react";
 
@@ -36,18 +37,24 @@ const FinalDetailsCollect = () => {
                         }
                         value={data.congregation}
                     />
-                    {errors.congregation && (
-                        <p className="text-red-500">{errors.congregation}</p>
-                    )}
+                    <InputError
+                        className="mt-2"
+                        message={errors.congregation}
+                    />
                     <Label htmlFor="phone">Phone</Label>
                     <Input
                         placeholder="Phone"
                         onChange={(e) => setData("phone", e.target.value)}
                         value={data.phone}
                     />
-                    {errors.phone && (
-                        <p className="text-red-500">{errors.phone}</p>
-                    )}
+                    <InputError
+                        className="mt-2"
+                        message={
+                            errors.phone === "validation.phone"
+                                ? "Please enter a valid phone number."
+                                : errors.phone
+                        }
+                    />
                     <Button type="submit">Submit</Button>
                 </div>
             </form>

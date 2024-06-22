@@ -87,7 +87,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        if ($user->localHousingContact->congregation === 'Please select a congregation' || $user->localHousingContact->phone === null) {
+        if ($user->localHousingContact->congregation === 'Please select a congregation' || $user->phone === null) {
             return redirect()->route('auth.final-details-collect');
         }
 
