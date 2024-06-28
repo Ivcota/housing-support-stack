@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
                 'project_housing_contact_id' => $phc->id,
             ])->has(
                 Survey::factory(5)->has(
-                    Comment::factory(3)->state([
+                    Comment::factory(1)->state([
                         'user_id' => rand(1, 3),
                     ])
                 )
