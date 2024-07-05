@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LocalHousingContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -11,11 +12,8 @@ class AdminDashboardController extends Controller
     public function index(Request $request)
     {
 
-        // if (!$request->user()->can('view-admin')) {
-        //     return redirect()->route('dashboard');
-        // }
+        $lhcs = LocalHousingContact::all()->map(function (LocalHousingContact $lhc) {
 
-        $lhcs = $request->user()->projectHousingContact->localHousingContact->map(function ($lhc) {
             return [
                 'id' => $lhc->id,
                 'name' => $lhc->user->name,
@@ -23,9 +21,12 @@ class AdminDashboardController extends Controller
                 'congregation' => $lhc->congregation,
                 'created_at' => $lhc->created_at,
                 'updated_at' => $lhc->updated_at,
+                'project_housing_contact_name' => $lhc->projectHousingContact->user->name,
                 'project_housing_contact_id' => $lhc->projectHousingContact->id,
             ];
         });
+
+
 
         return Inertia::render('Admin/Dashboard', [
             'lhcs' => $lhcs,
