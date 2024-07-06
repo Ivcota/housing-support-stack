@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'can:view-admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/lhc/{id}', [AdminDashboardController::class, 'show'])->name('admin.lhc.show');
+    Route::get('admin/dashboard/{id}', [AdminDashboardController::class, 'index_with_selected'])->name('admin.dashboard.selected');
 });
 
 Route::get('/privacy-policy', function () {

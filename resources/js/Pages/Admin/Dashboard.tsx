@@ -21,11 +21,12 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
+import { router, usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Components/ui/button";
 import { PageProps } from "@/types";
-import { router } from "@inertiajs/react";
 
 export interface LHC {
     id: number;
@@ -65,10 +66,49 @@ const columns = [
         id: "actions",
         header: () => "Actions",
         cell: (info) => {
+            const {
+                props: { selected },
+            } = usePage<{ selected: LHC }>();
+
+            const [open, setOpen] = useState(false);
+
+            const handleClick = () => {
+                router.get(
+                    route("admin.dashboard.selected", {
+                        id: info.row.original.id,
+                    }),
+                    {},
+                    { preserveScroll: true }
+                );
+            };
+
+            useEffect(() => {
+                if (info.row.original.id === selected?.id) {
+                    setOpen(true);
+                }
+            }, []);
+
             return (
-                <Sheet>
+                <Sheet
+                    open={open}
+                    onOpenChange={(open) => {
+                        if (open) {
+                            return;
+                        }
+
+                        if (!open) {
+                            router.get(
+                                route("admin.dashboard"),
+                                {},
+                                {
+                                    preserveScroll: true,
+                                }
+                            );
+                        }
+                    }}
+                >
                     <SheetTrigger asChild>
-                        <Button>View</Button>
+                        <Button onClick={handleClick}>View</Button>
                     </SheetTrigger>
                     <SheetContent>
                         <SheetHeader>
@@ -97,12 +137,12 @@ const Dashboard = ({ auth, lhcs }: PageProps<{ lhcs: LHC[] }>) => {
         <Authenticated
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 className="text-xl font-semibold leading-tight text-gray-800">
                     Admin Dashboard
                 </h2>
             }
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 rounded bg-white">
+            <div className="px-4 mx-auto mt-6 bg-white rounded max-w-7xl sm:px-6 lg:px-8">
                 <Table>
                     <TableCaption>Local Housing Contacts</TableCaption>
                     <TableHeader>
