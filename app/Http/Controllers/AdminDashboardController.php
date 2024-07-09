@@ -49,10 +49,13 @@ class AdminDashboardController extends Controller
         });
 
         $selected = LocalHousingContact::find($id);
+        $selected_notes = $selected->notes;
+
 
         return Inertia::render('Admin/Dashboard', [
             'lhcs' => $lhcs,
             'selected' => $selected,
+            'selected_notes' => $selected_notes,
         ]);
     }
 

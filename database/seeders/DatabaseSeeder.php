@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Comment;
 use App\Models\LocalHousingContact;
+use App\Models\Note;
 use App\Models\ProjectHousingContact;
 use App\Models\Survey;
 use App\Models\User;
@@ -34,6 +35,10 @@ class DatabaseSeeder extends Seeder
                         'user_id' => rand(1, 3),
                     ])
                 )
+            )->has(
+                Note::factory(4)->state([
+                    'user_id' => $phc->id,
+                ])
             )
         )->create();
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LocalHousingContact extends Model
 {
@@ -28,5 +29,10 @@ class LocalHousingContact extends Model
     function projectHousingContact()
     {
         return $this->belongsTo(ProjectHousingContact::class);
+    }
+
+    function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
     }
 }
