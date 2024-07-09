@@ -24,12 +24,12 @@ export default function Authenticated({
     return (
         <div className="min-h-screen">
             <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
-                            <div className="shrink-0 flex items-center">
+                            <div className="flex items-center shrink-0">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block w-auto text-gray-800 fill-current h-9" />
                                 </Link>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -53,13 +53,13 @@ export default function Authenticated({
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
+                            <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none"
                                             >
                                                 {user.name}
 
@@ -97,17 +97,17 @@ export default function Authenticated({
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="flex items-center -me-2 sm:hidden">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
                                         (previousState) => !previousState
                                     )
                                 }
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                className="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500"
                             >
                                 <svg
-                                    className="h-6 w-6"
+                                    className="w-6 h-6"
                                     stroke="currentColor"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -153,20 +153,22 @@ export default function Authenticated({
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("admin.dashboard")}
-                            active={route().current("admin.dashboard")}
-                        >
-                            Admin Dashboard
-                        </ResponsiveNavLink>
+                        {canViewAdmin && (
+                            <ResponsiveNavLink
+                                href={route("admin.dashboard")}
+                                active={route().current("admin.dashboard")}
+                            >
+                                Admin Dashboard
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
+                            <div className="text-base font-medium text-gray-800">
                                 {user.name}
                             </div>
-                            <div className="font-medium text-sm text-gray-500">
+                            <div className="text-sm font-medium text-gray-500">
                                 {user.email}
                             </div>
                         </div>
@@ -189,7 +191,7 @@ export default function Authenticated({
 
             {header && (
                 <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                         {header}
                     </div>
                 </header>
