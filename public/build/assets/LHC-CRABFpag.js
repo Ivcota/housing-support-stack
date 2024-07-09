@@ -1,1 +1,0 @@
-import{j as t}from"./app-DqNi87K9.js";import{A as s}from"./AuthenticatedLayout-BRUBhACb.js";import"./ApplicationLogo-C5nGa531.js";import"./transition-BfJHJyqU.js";const n=({auth:e,lhc:r})=>t.jsx(s,{header:t.jsx("h2",{className:"font-semibold text-xl text-gray-800 leading-tight",children:r.name}),user:e.user});export{n as default};
